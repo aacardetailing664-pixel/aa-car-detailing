@@ -8,9 +8,6 @@ const SERVICE_ID = "service_9fhwe9u";
 const ADMIN_TEMPLATE = "template_1obxz4e";
 const CUSTOMER_TEMPLATE = "template_p1tsqz7";
 
-/* ---------- ADDED: API base for your Node server ---------- */
-const API_BASE = "http://localhost:3000";
-
 /* ---------- Services data ---------- */
 const serviceDescriptions = {
   "Basic Wash": "A contact and non-contact exterior wash.",
@@ -69,8 +66,18 @@ const $ = id => document.getElementById(id);
 
 /* ---------- Disable past dates ---------- */
 const dateInput = $("date");
-const today = new Date().toISOString().split("T")[0];
-dateInput.min = today;
+dateInput.min = new Date().toISOString().split("T")[0];
+
+/* ---------- API + time config ---------- */
+const API_URL = "/.netlify/functions/bookings";
+
+const TIME_SLOTS = [
+  "09:00","10:00","11:00","12:00",
+  "13:00","14:00","15:00","16:00",
+  "17:00","18:00","19:00"
+];
+
+const CERAMIC_BLOCK = ["09:00","10:00","11:00"];
 
 /* ---------- Render services ---------- */
 const serviceList = $("serviceList");
@@ -108,68 +115,39 @@ serviceSelect.addEventListener("change", () => {
     : "Price: —";
 });
 
-/* =========================================================
-   TIME SLOTS + CERAMIC BLOCKING
-   ========================================================= */
-
-const TIME_SLOTS = [
-  "09:00","10:00","11:00","12:00",
-  "13:00","14:00","15:00","16:00",
-  "17:00","18:00","19:00"
-];
-
-const CERAMIC_BLOCK = ["09:00","10:00","11:00"]; // 3 hours
+/* ---------- Time slots ---------- */
 const timeSelect = $("timeSlot");
 
-/* ---------- ADDED: server helpers ---------- */
 async function fetchBookedTimes(date) {
-  const res = await fetch(`${API_BASE}/bookings?date=${encodeURIComponent(date)}`);
-  if (!res.ok) throw new Error("Failed to fetch bookings");
-  return await res.json(); // array of times
+  const res = await fetch(`${API_URL}?date=${date}`);
+  if (!res.ok) return [];
+  return await res.json();
 }
 
-async function saveBookedTimes(date, times) {
-  const res = await fetch(`${API_BASE}/bookings`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ date, times })
-  });
-
-  if (res.status === 409) return { ok: false, reason: "conflict" };
-  if (!res.ok) return { ok: false, reason: "server" };
-  return { ok: true };
-}
-
-/* ---- Load time slots ---- */
-dateInput.addEventListener("change", loadSlots);
-serviceSelect.addEventListener("change", loadSlots);
-
-/* ---------- loadSlots must be async to read server ---------- */
 async function loadSlots() {
   const date = dateInput.value;
   timeSelect.innerHTML = `<option value="">Select time</option>`;
   if (!date) return;
 
-  let booked = [];
-  try {
-    booked = await fetchBookedTimes(date);
-  } catch (err) {
-    console.error(err);
-    return;
-  }
-
-  const isCeramic = serviceSelect.value.startsWith("Ceramic Coating");
+  const booked = await fetchBookedTimes(date);
+  const isCeramic =
+    serviceSelect.value &&
+    serviceSelect.value.startsWith("Ceramic");
 
   TIME_SLOTS.forEach(time => {
     const opt = document.createElement("option");
     opt.value = time;
 
     if (isCeramic) {
-      opt.textContent = time === "09:00" ? "09:00 — Ceramic Only" : `${time} — Unavailable`;
-      opt.disabled = time !== "09:00" || CERAMIC_BLOCK.some(t => booked.includes(t));
-      if (time === "09:00" && opt.disabled) opt.textContent = "09:00 — Unavailable";
+      opt.textContent =
+        time === "09:00"
+          ? "09:00 — Ceramic (3 hrs)"
+          : `${time} — Unavailable`;
+      opt.disabled = time !== "09:00";
     } else {
-      opt.textContent = booked.includes(time) ? `${time} — Booked` : time;
+      opt.textContent = booked.includes(time)
+        ? `${time} — Booked`
+        : time;
       opt.disabled = booked.includes(time);
     }
 
@@ -177,41 +155,47 @@ async function loadSlots() {
   });
 }
 
+dateInput.addEventListener("change", loadSlots);
+serviceSelect.addEventListener("change", loadSlots);
+
 /* ---------- Submit ---------- */
 const bookingForm = $("bookingForm");
 const formMessage = $("formMessage");
 
-/* ---------- submit must be async to save to server ---------- */
 bookingForm.addEventListener("submit", async e => {
   e.preventDefault();
 
   const date = dateInput.value;
   const time = timeSelect.value;
   const svcVal = serviceSelect.value;
-  if (!date || !time || !svcVal) return alert("Complete all fields.");
 
-  const isCeramic = svcVal.startsWith("Ceramic Coating");
-
-  /* ---------- ADDED: save booking to Node server (shared) ---------- */
-  const timesToBook = isCeramic ? CERAMIC_BLOCK : [time];
-
-  const saveResult = await saveBookedTimes(date, timesToBook);
-  if (!saveResult.ok) {
-    if (saveResult.reason === "conflict") {
-      alert("That slot was just booked by someone else. Please choose another time.");
-      await loadSlots();
-      return;
-    }
-    alert("Server error saving booking. Please try again.");
+  if (!date || !time || !svcVal) {
+    alert("Please complete all fields.");
     return;
   }
 
-  /* ---- Email ---- */
+  const isCeramic = svcVal.startsWith("Ceramic");
+  const blockTimes = isCeramic ? CERAMIC_BLOCK : [time];
+
+  const booked = await fetchBookedTimes(date);
+  if (blockTimes.some(t => booked.includes(t))) {
+    alert("That time slot is already booked. Please choose another.");
+    return;
+  }
+
+  for (const t of blockTimes) {
+    await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ date, time: t })
+    });
+  }
+
   const adminParams = {
     name: $("customerName").value,
     phone: $("phone").value,
     email: $("email").value,
-    vehicle: $("vehicleType").value,
+    vehicle: vehicleSelect.value,
     service: svcVal.split("|")[0],
     date,
     time,
@@ -219,41 +203,30 @@ bookingForm.addEventListener("submit", async e => {
     notes: $("notes").value
   };
 
-  /* ---------- ADDED: customerParams for customer email ---------- */
-  const customerParams = {
-    ...adminParams,
-    to_email: $("email").value
-  };
-
   const submitBtn = bookingForm.querySelector("button");
   submitBtn.disabled = true;
   submitBtn.textContent = "Sending…";
 
   emailjs.send(SERVICE_ID, ADMIN_TEMPLATE, adminParams)
-    /* ---------- ADDED: make success handler async so we can await loadSlots ---------- */
-    .then(async () => {
-      /* ---------- ADDED: send customer email too (if provided) ---------- */
-      if (customerParams.to_email) {
-        await emailjs.send(SERVICE_ID, CUSTOMER_TEMPLATE, customerParams);
+    .then(() => {
+      if (adminParams.email) {
+        return emailjs.send(SERVICE_ID, CUSTOMER_TEMPLATE, adminParams);
       }
-
+    })
+    .then(() => {
       formMessage.style.color = "lightgreen";
       formMessage.textContent = "Booking confirmed.";
 
-      /* ---------- ADDED: keep date/service so dropdown can refresh and show booked ---------- */
-      const keepDate = dateInput.value;
-      const keepService = serviceSelect.value;
-
+      /* ===== ONLY ADDED BITS BELOW ===== */
+      const savedDate = dateInput.value;   // keep date
       bookingForm.reset();
+      dateInput.value = savedDate;          // restore date
+      /* ================================= */
 
-      dateInput.value = keepDate;
-      serviceSelect.value = keepService;
-
-      /* ---------- ADDED: reload times from server to show booked slots ---------- */
-      await loadSlots();
+      timeSelect.innerHTML = `<option value="">Select time</option>`;
+      loadSlots(); // refresh booked slots
     })
-    .catch((err) => {
-      console.error("EmailJS error:", err);
+    .catch(() => {
       formMessage.style.color = "tomato";
       formMessage.textContent = "Error sending booking.";
     })
@@ -262,3 +235,5 @@ bookingForm.addEventListener("submit", async e => {
       submitBtn.textContent = "Submit Booking";
     });
 });
+
+
