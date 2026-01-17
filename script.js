@@ -20,44 +20,44 @@ const serviceDescriptions = {
 
 const services = {
   "Small Car": [
-    { name: "Basic Wash", price: 15 },
-    { name: "Wash & Wax", price: 25 },
-    { name: "Wash, Wax & Polish", price: 45 },
-    { name: "Interior Only", price: 35 },
-    { name: "Premium Valet", price: 100 },
-    { name: "Ceramic Coating", price: 210 }
+    { name: "Basic Wash", price: 10 },
+    { name: "Wash & Wax", price: 20 },
+    { name: "Wash, Wax & Polish", price: 40 },
+    { name: "Interior Only", price: 30 },
+    { name: "Premium Valet", price: 95 },
+    { name: "Ceramic Coating", price: 205 }
   ],
   "Medium Car": [
-    { name: "Basic Wash", price: 25 },
-    { name: "Wash & Wax", price: 35 },
-    { name: "Wash, Wax & Polish", price: 55 },
-    { name: "Interior Only", price: 40 },
-    { name: "Premium Valet", price: 125 },
-    { name: "Ceramic Coating", price: 235 }
+    { name: "Basic Wash", price: 20 },
+    { name: "Wash & Wax", price: 30 },
+    { name: "Wash, Wax & Polish", price: 50 },
+    { name: "Interior Only", price: 35 },
+    { name: "Premium Valet", price: 105 },
+    { name: "Ceramic Coating", price: 230 }
   ],
   "Large Car": [
-    { name: "Basic Wash", price: 35 },
-    { name: "Wash & Wax", price: 45 },
-    { name: "Wash, Wax & Polish", price: 65 },
-    { name: "Interior Only", price: 50 },
-    { name: "Premium Valet", price: 135 },
-    { name: "Ceramic Coating", price: 255 }
+    { name: "Basic Wash", price: 30 },
+    { name: "Wash & Wax", price: 40 },
+    { name: "Wash, Wax & Polish", price: 60 },
+    { name: "Interior Only", price: 45 },
+    { name: "Premium Valet", price: 130 },
+    { name: "Ceramic Coating", price: 250 }
   ],
   "Small Van": [
     { name: "Basic Wash", price: 30 },
-    { name: "Wash & Wax", price: 55 },
-    { name: "Wash, Wax & Polish", price: 75 },
-    { name: "Interior Only", price: 40 },
-    { name: "Premium Valet", price: 140 },
-    { name: "Ceramic Coating", price: 275 }
+    { name: "Wash & Wax", price: 50 },
+    { name: "Wash, Wax & Polish", price: 70 },
+    { name: "Interior Only", price: 35 },
+    { name: "Premium Valet", price: 135 },
+    { name: "Ceramic Coating", price: 270 }
   ],
   "Large Van": [
-    { name: "Basic Wash", price: 40 },
-    { name: "Wash & Wax", price: 65 },
-    { name: "Wash, Wax & Polish", price: 85 },
-    { name: "Interior Only", price: 50 },
-    { name: "Premium Valet", price: 150 },
-    { name: "Ceramic Coating", price: 300 }
+    { name: "Basic Wash", price: 35 },
+    { name: "Wash & Wax", price: 60 },
+    { name: "Wash, Wax & Polish", price: 80 },
+    { name: "Interior Only", price: 45 },
+    { name: "Premium Valet", price: 145 },
+    { name: "Ceramic Coating", price: 395 }
   ]
 };
 
@@ -235,5 +235,6 @@ bookingForm.addEventListener("submit", async e => {
       submitBtn.textContent = "Submit Booking";
     });
 });
+
 
 
