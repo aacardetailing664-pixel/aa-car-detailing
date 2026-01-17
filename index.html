@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AA Car Detailing</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- EmailJS browser SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      try { emailjs.init("yUJEEAKbGwrHzv8i9"); }
+      catch(e){ console.warn("EmailJS init failed", e); }
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="logo.png" alt="AA Car Detailing logo" class="logo shine" />
+      <div class="brand-text">
+        <h1>AA Car Detailing</h1>
+        <p class="tagline">Mobile valeting • Ceramic coating • Premium interior care</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="car-wrap" aria-hidden="true">
+        <img src="lambo.png" alt="Animated car" class="car-slide">
+      </div>
+      <div class="hero-copy">
+        <h2>Bring back the shine</h2>
+        <p>Book a professional wash, valet or ceramic coating — we come to you.</p>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <h2>Our Services</h2>
+      <div id="serviceList" class="service-list" aria-live="polite"></div>
+    </section>
+<center>
+    <p>DISCLAIMER: The local access is for the booking times so please accept the warning:)</p>
+</center>
+    <section id="booking" class="section booking-section">
+      <h2>Book a Service</h2>
+
+      <form id="bookingForm" autocomplete="off">
+        <div class="row">
+          <input id="customerName" type="text" placeholder="Full name" required>
+          <input id="phone" type="tel" placeholder="Phone number" required>
+        </div>
+
+        <div class="row">
+          <input id="email" type="email" placeholder="Email (for confirmation)">
+          <select id="vehicleType" required>
+            <option value="">Select vehicle size</option>
+            <option>Small Car</option>
+            <option>Medium Car</option>
+            <option>Large Car</option>
+            <option>Small Van</option>
+            <option>Large Van</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <select id="service" required>
+            <option value="">Select service</option>
+          </select>
+          <div class="price-box" id="priceDisplay">Price: —</div>
+        </div>
+
+        <div class="row">
+          <input id="date" type="date" required>
+          <select id="timeSlot" required>
+            <option value="">Select time</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <input id="address" type="text" placeholder="Your address" required>
+        </div>
+
+        <textarea id="notes" placeholder="Additional notes (optional)"></textarea>
+
+        <div class="actions">
+          <button type="submit" class="btn-primary">Submit Booking</button>
+        </div>
+
+        <p id="formMessage" class="form-message"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 AA Car Detailing</p>
+  </footer>
+<footer class="site-footer">
+  <p>Note: All Ceramic Coatings are at 9:00 and are 3 hours or less</p>
+</footer>
+  
+
+  <script src="script.js"></script>
+</body>
+</html>
