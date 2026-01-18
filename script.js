@@ -14,7 +14,7 @@ const serviceDescriptions = {
   "Wash & Wax": "Includes a full contact + non-contact wash and a hand wax.",
   "Wash, Wax & Polish": "Full wash, hand wax, and paint correction polish.",
   "Interior Only": "full interior clean including windows, carpets, seats, dashboard and roof.",
-  "Interor Deep clean": "Deep interior clean using a steamer as well as the basic products.",
+  "Interior Deep Clean": "Deep interior clean using a steamer as well as the basic products.",
   "Premium Valet": "Full interior deep clean + exterior clean.",
   "Ceramic Coating": "4-month ceramic protective coating (3 hours)."
 };
@@ -34,7 +34,7 @@ const services = {
     { name: "Wash & Wax", price: 30 },
     { name: "Wash, Wax & Polish", price: 50 },
     { name: "Interior Only", price: 35 },
-    { name: "Interior Deep clean", price: 55 },
+    { name: "Interior Deep Clean", price: 55 },
     { name: "Premium Valet", price: 105 },
     { name: "Ceramic Coating", price: 230 }
   ],
@@ -43,7 +43,7 @@ const services = {
     { name: "Wash & Wax", price: 40 },
     { name: "Wash, Wax & Polish", price: 60 },
     { name: "Interior Only", price: 45 },
-    { name: "Interior Deep clean", price: 65 },
+    { name: "Interior Deep Clean", price: 65 },
     { name: "Premium Valet", price: 130 },
     { name: "Ceramic Coating", price: 250 }
   ],
@@ -52,7 +52,7 @@ const services = {
     { name: "Wash & Wax", price: 50 },
     { name: "Wash, Wax & Polish", price: 70 },
     { name: "Interior Only", price: 35 },
-    { name: "Interior Deep clean", price: 45 },
+    { name: "Interior Deep Clean", price: 45 },
     { name: "Premium Valet", price: 135 },
     { name: "Ceramic Coating", price: 270 }
   ],
@@ -61,7 +61,7 @@ const services = {
     { name: "Wash & Wax", price: 60 },
     { name: "Wash, Wax & Polish", price: 80 },
     { name: "Interior Only", price: 45 },
-    {name: "Interior Deep clean", price: 55 },
+    {name: "Interior Deep Clean", price: 55 },
     { name: "Premium Valet", price: 145 },
     { name: "Ceramic Coating", price: 395 }
   ]
@@ -241,6 +241,7 @@ bookingForm.addEventListener("submit", async e => {
       submitBtn.textContent = "Submit Booking";
     });
 });
+
 
 
 
