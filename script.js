@@ -14,7 +14,7 @@ const serviceDescriptions = {
   "Wash & Wax": "Includes a full contact + non-contact wash and a hand wax.",
   "Wash, Wax & Polish": "Full wash, hand wax, and paint correction polish.",
   "Interior Only": "full interior clean including windows, carpets, seats, dashboard and roof.",
-  "Interor Deep Clean": "Deep interior clean using a steamer as well as the basic products.",
+  "Interor Deep clean": "Deep interior clean using a steamer as well as the basic products.",
   "Premium Valet": "Full interior deep clean + exterior clean.",
   "Ceramic Coating": "4-month ceramic protective coating (3 hours)."
 };
@@ -241,6 +241,7 @@ bookingForm.addEventListener("submit", async e => {
       submitBtn.textContent = "Submit Booking";
     });
 });
+
 
 
 
