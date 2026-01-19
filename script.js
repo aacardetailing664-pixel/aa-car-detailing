@@ -17,7 +17,7 @@ const serviceDescriptions = {
   "Interior Deep Clean": "Deep interior clean using a steamer as well as the basic products.",
   "Premium Valet": "Full interior deep clean + exterior clean.",
   "Ceramic Coating": "10-Year Ceramic Coating including a clay bar treatment and polish.",
-  "Luxrious Valet": "Interior Deep Clean + Exterior Clean, polish and 10-Year Ceramic Coating."
+  "Luxurious Valet": "Interior Deep Clean + Exterior Clean, polish and 10-Year Ceramic Coating."
 };
 
 const services = {
@@ -39,7 +39,7 @@ const services = {
     { name: "Interior Deep Clean", price: 55 },
     { name: "Premium Valet", price: 105 },
     { name: "Ceramic Coating", price: 230 },
-    { name: "Luxrious Valet", price: 280},
+    { name: "Luxurious Valet", price: 280},
   ],
   "Large Car": [
     { name: "Basic Wash", price: 30 },
@@ -248,6 +248,7 @@ bookingForm.addEventListener("submit", async e => {
       submitBtn.textContent = "Submit Booking";
     });
 });
+
 
 
 
