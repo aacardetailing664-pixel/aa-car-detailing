@@ -16,7 +16,8 @@ const serviceDescriptions = {
   "Interior Only": "full interior clean including windows, carpets, seats, dashboard and roof.",
   "Interior Deep Clean": "Deep interior clean using a steamer as well as the basic products.",
   "Premium Valet": "Full interior deep clean + exterior clean.",
-  "Ceramic Coating": "4-month ceramic protective coating (3 hours)."
+  "Ceramic Coating": "10-Year Ceramic Coating including a clay bar treatment and polish.",
+  "Luxrious Valet": "Interior Deep Clean + Exterior Clean, polish and 10-Year Ceramic Coating."
 };
 
 const services = {
@@ -27,7 +28,8 @@ const services = {
     { name: "Interior Only", price: 30 },
     { name: "Interior Deep Clean", price: 45 },
     { name: "Premium Valet", price: 95 },
-    { name: "Ceramic Coating", price: 205 }
+    { name: "Ceramic Coating", price: 205 },
+    { name: "Luxurious Valet", price: 255 }
   ],
   "Medium Car": [
     { name: "Basic Wash", price: 20 },
@@ -36,7 +38,8 @@ const services = {
     { name: "Interior Only", price: 35 },
     { name: "Interior Deep Clean", price: 55 },
     { name: "Premium Valet", price: 105 },
-    { name: "Ceramic Coating", price: 230 }
+    { name: "Ceramic Coating", price: 230 },
+    { name: "Luxrious Valet", price: 280},
   ],
   "Large Car": [
     { name: "Basic Wash", price: 30 },
@@ -45,7 +48,9 @@ const services = {
     { name: "Interior Only", price: 45 },
     { name: "Interior Deep Clean", price: 65 },
     { name: "Premium Valet", price: 130 },
-    { name: "Ceramic Coating", price: 250 }
+    { name: "Ceramic Coating", price: 250 },
+    { name: "Luxurious Valet", price: 300 }
+    
   ],
   "Small Van": [
     { name: "Basic Wash", price: 30 },
@@ -54,7 +59,8 @@ const services = {
     { name: "Interior Only", price: 35 },
     { name: "Interior Deep Clean", price: 45 },
     { name: "Premium Valet", price: 135 },
-    { name: "Ceramic Coating", price: 270 }
+    { name: "Ceramic Coating", price: 270 },
+    { name: "Luxurious Valet", price: 320 },
   ],
   "Large Van": [
     { name: "Basic Wash", price: 35 },
@@ -63,7 +69,8 @@ const services = {
     { name: "Interior Only", price: 45 },
     {name: "Interior Deep Clean", price: 55 },
     { name: "Premium Valet", price: 145 },
-    { name: "Ceramic Coating", price: 395 }
+    { name: "Ceramic Coating", price: 295 },
+    { name: "Luxurious Valet", price: 345}
   ]
 };
 
@@ -241,6 +248,7 @@ bookingForm.addEventListener("submit", async e => {
       submitBtn.textContent = "Submit Booking";
     });
 });
+
 
 
 
